@@ -1,0 +1,140 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../marked-element/marked-element.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<!--
+`pmp-help`
+pmp-help should show the contents of the file in a paper-dialog
+
+@demo demo/index.html
+-->
+<dom-module id="pmp-help">
+  <template>
+    <style is="custom-style">
+    : host {
+      display: block;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      width: 100%;
+    }
+    
+    {
+      /*    marked-element {
+      display: block;
+      padding: 10px 30px;
+      margin-bottom: 10px;
+    }
+
+    .markdown-html.custom p {
+      padding-left: 24px;
+    }
+*/
+    }
+    
+    #main {
+      max-width: 600px;
+      vertical-align: middle;
+    }
+    
+    #help {
+      color: var(--paper-indigo-700);
+    }
+    </style>
+    <div id="main">
+      <section>
+        <paper-icon-button icon="help" id="help" title="help" on-tap="_toggleDialog"></paper-icon-button>
+        <paper-dialog id="dialog">
+          <paper-dialog-scrollable>
+            <marked-element markdown="{{_fileContent}}">
+            </marked-element>
+          </paper-dialog-scrollable>
+          <div class="buttons">
+            <paper-button dialog-dismiss autofocus>Close</paper-button>
+          </div>
+        </paper-dialog>
+      </section>
+    </div>
+    <paper-toast id="toast" duration="[[_toastDuration]]" class="fit-bottom" text="Failed to load file."></paper-toast>
+  </template>
+  <script>
+  Polymer({
+    is: 'pmp-help',
+
+    properties: {
+      _fileContent: {
+        type: String
+      },
+
+      fileName: {
+        type: String,
+        notify: true
+      },
+
+      _toastDuration: {
+        type: Number,
+        value: 6000
+      },
+
+      _loadsContentDuration: {
+        type: Number,
+        value: 400
+      },
+
+
+    },
+     _handleErrors: function(response) {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      },
+
+
+    _getFileContent: function(fileName) {
+      console.log("filename:" + fileName);
+
+      if (fileName) {
+        fetch(fileName)
+          .then(this._handleErrors)
+          .then(response => {
+            var contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("text/x-markdown") !== -1) {
+              response.text().then((text) => {
+                this._fileContent = text;
+              });
+              console.log("ok")
+            }
+          }).catch(error => {
+            console.log(error);
+            if (this.$.help && this.$.toast) {
+              this.$.help.style.color = 'red';
+              this.$.toast.open();
+            }
+          });
+      } else {
+        console.log('File not found');
+        if (this.$.help && this.$.toast) {
+          this.$.help.style.color = 'red';
+          this.$.toast.open();
+        }
+      }
+    },
+
+    _toggleDialog: function() {
+      if (this.$.dialog) {
+        this._getFileContent(this.fileName);
+        this.async(function() {
+          if (this._fileContent) {
+            this.$.dialog.open();
+
+          }
+        }, this._loadsContentDuration);
+      }
+    }
+
+  });
+  </script>
+</dom-module>
