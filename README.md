@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/biztek/pmp-help.svg?branch=master)](https://travis-ci.org/biztek/pmp-help)
+
+_[Demo and API Docs](https://biztek.github.io/pmp-help/components/pmp-help/)_
+
 # \<pmp-help\>
 
 pmp-help should show the contents of the file in a paper-dialog
@@ -17,7 +21,7 @@ $ polymer serve
 Install the component using [Bower](http://bower.io/):
 
 ```sh
-$ bower install — save Biztek/pmp-help
+$ bower install â€” save Biztek/pmp-help
 ```
 
 ## Usage
