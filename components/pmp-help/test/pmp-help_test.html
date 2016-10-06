@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>pmp-help test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+  <link rel="import" href="../pmp-help.html">
+</head>
+
+<body>
+  <test-fixture id="basic">
+    <template>
+      <pmp-help></pmp-help>
+    </template>
+  </test-fixture>
+  <test-fixture id="element">
+    <template>
+      <pmp-help file-name="/help/test.md"></pmp-help>
+    </template>
+  </test-fixture>
+  <script>
+  suite('pmp-help', function() {
+    test('instantiating the element works', function() {
+      var element = fixture('basic');
+      assert.equal(element.is, 'pmp-help');
+    });
+
+  });
+
+  suite('dialog behavior while open and close dialog box', function() {
+
+    test('sets dialog-dismiss based on dialog-dismiss attribute', function() {
+      var element = fixture('basic');
+      var button = Polymer.dom(element.root).querySelector("paper-button[dialog-dismiss]");
+      expect(button.textContent.trim()).to.be.eql("Close");
+    });
+
+    test('maked element file content matches', function() {
+      var element = fixture('basic');
+      element._fileContent = '#34';
+      assert.equal(element._fileContent, '#34', 'clicking on help icon dialog to be opened');
+    });
+
+  });
+
+  suite('file not found toast error', function() {
+
+    test('error display', function() {
+      var element = fixture('basic');
+      var toast = Polymer.dom(element.root).querySelector("#toast");
+      expect(toast.text).to.equal('Failed to load file.');
+    });
+
+    test('paper dialog opened', function() {
+      var element = fixture('element');
+      var help = Polymer.dom(element.root).querySelector("#help");
+      help.click();
+      var dialog = Polymer.dom(element.root).querySelector("#dialog");
+      dialog.open();
+      expect(dialog.opened).to.equal(true);
+    });
+
+  });
+  </script>
+</body>
+
+</html>
