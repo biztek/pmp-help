@@ -57,14 +57,14 @@
       expect(toast.text).to.equal('Failed to load file.');
     });
 
-    test('paper dialog opened', function() {
-      var element = fixture('element');
-      var help = Polymer.dom(element.root).querySelector("#help");
-      help.click();
-      var dialog = Polymer.dom(element.root).querySelector("#dialog");
-      dialog.open();
-      expect(dialog.opened).to.equal(true);
-    });
+//     test('paper dialog opened', function() {
+//       var element = fixture('element');
+//       var help = Polymer.dom(element.root).querySelector("#help");
+//       help.click();
+//       var dialog = Polymer.dom(element.root).querySelector("#dialog");
+//       dialog.open();
+//       expect(dialog.opened).to.equal(true);
+//     });
 
   });
   </script>
