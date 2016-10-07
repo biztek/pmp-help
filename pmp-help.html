@@ -5,6 +5,7 @@
 <link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <!--
 `pmp-help`
 pmp-help should show the contents of the file in a paper-dialog
@@ -78,61 +79,36 @@ pmp-help should show the contents of the file in a paper-dialog
         value: 6000
       },
 
-      _loadsContentDuration: {
-        type: Number,
-        value: 400
-      },
-
-
     },
-     _handleErrors: function(response) {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response;
-      },
-
 
     _getFileContent: function(fileName) {
       console.log("filename:" + fileName);
+      fetch(fileName)
+        .then(response => {
+          if (response.headers.get("content-type") &&
+            response.headers.get("content-type").toLowerCase().indexOf("text/x-markdown") >= 0) {
+            return response.text();
+          } else {
+            throw new TypeError();
+          }
+        }).then(text => {
+          this._fileContent = text;
+          if (this.$.dialog) {
+            this.$.dialog.open();
+          }
 
-      if (fileName) {
-        fetch(fileName)
-          .then(this._handleErrors)
-          .then(response => {
-            var contentType = response.headers.get("content-type");
-            if (contentType && contentType.indexOf("text/x-markdown") !== -1) {
-              response.text().then((text) => {
-                this._fileContent = text;
-              });
-              console.log("ok")
-            }
-          }).catch(error => {
-            console.log(error);
-            if (this.$.help && this.$.toast) {
-              this.$.help.style.color = 'red';
-              this.$.toast.open();
-            }
-          });
-      } else {
-        console.log('File not found');
-        if (this.$.help && this.$.toast) {
-          this.$.help.style.color = 'red';
-          this.$.toast.open();
-        }
-      }
+        }).catch(error => {
+          console.log(error);
+          if (this.$.help && this.$.toast) {
+            this.$.help.style.color = 'red';
+            this.$.toast.open();
+          }
+        });
+
     },
 
     _toggleDialog: function() {
-      if (this.$.dialog) {
         this._getFileContent(this.fileName);
-        this.async(function() {
-          if (this._fileContent) {
-            this.$.dialog.open();
-
-          }
-        }, this._loadsContentDuration);
-      }
     }
 
   });
