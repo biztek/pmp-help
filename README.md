@@ -2,41 +2,24 @@
 
 _[Demo and API Docs](https://biztek.github.io/pmp-help/components/pmp-help/)_
 
-# \<pmp-help\>
+##&lt;pmp-help&gt;
 
-pmp-help should show the contents of the file in a paper-dialog
-
-## Install the Polymer-CLI
-
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
-
-## Viewing Your Application
-
-```
-$ polymer serve
-```
-
-### Install
-
-Install the component using [Bower](http://bower.io/):
-
-```sh
-$ bower install — save Biztek/pmp-help
-```
-
-## Usage
-
-Import Custom Element:
+`<pmp-help>` is a help icon button to show the markdown contents of the file in a paper-dialog.
 
 ```html
-<link rel="import" href="bower_components/pmp-help/pmp-help.html">
+<pmp-help fileName="EnterFileName.md"></pmp-help>
 ```
 
-And then use it:
 
-```html
-<pmp-help></pmp-help>
-```
+### Validation
+
+If the File Name is not found paper toast will display `File not Found`
+and the help icon color changes to red.
+
+
+### Styling
+
+The following custom properties and mixins are available for styling:
 
 ## Contributing
 

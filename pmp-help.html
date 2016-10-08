@@ -22,19 +22,6 @@ pmp-help should show the contents of the file in a paper-dialog
       width: 100%;
     }
     
-    {
-      /*    marked-element {
-      display: block;
-      padding: 10px 30px;
-      margin-bottom: 10px;
-    }
-
-    .markdown-html.custom p {
-      padding-left: 24px;
-    }
-*/
-    }
-    
     #main {
       max-width: 600px;
       vertical-align: middle;
@@ -83,32 +70,29 @@ pmp-help should show the contents of the file in a paper-dialog
 
     _getFileContent: function(fileName) {
       console.log("filename:" + fileName);
-      fetch(fileName)
-        .then(response => {
-          if (response.headers.get("content-type") &&
-            response.headers.get("content-type").toLowerCase().indexOf("text/x-markdown") >= 0) {
-            return response.text();
-          } else {
-            throw new TypeError();
-          }
-        }).then(text => {
-          this._fileContent = text;
-          if (this.$.dialog) {
-            this.$.dialog.open();
-          }
-
-        }).catch(error => {
-          console.log(error);
-          if (this.$.help && this.$.toast) {
-            this.$.help.style.color = 'red';
-            this.$.toast.open();
-          }
-        });
-
+      fetch(fileName).then(response => {
+        if (response.headers.get("content-type") &&
+          response.headers.get("content-type").toLowerCase().indexOf("text/x-markdown") >= 0) {
+          return response.text();
+        } else {
+          throw new TypeError();
+        }
+      }).then(text => {
+        this._fileContent = text;
+        if (this.$.dialog) {
+          this.$.dialog.open();
+        }
+      }).catch(error => {
+        console.log(error);
+        if (this.$.help && this.$.toast) {
+          this.$.help.style.color = 'red';
+          this.$.toast.open();
+        }
+      });
     },
 
     _toggleDialog: function() {
-        this._getFileContent(this.fileName);
+      this._getFileContent(this.fileName);
     }
 
   });
