@@ -13,8 +13,7 @@ _[Demo and API Docs](https://biztek.github.io/pmp-help/components/pmp-help/)_
 
 ### Validation
 
-If the File Name is not found paper toast will display `File not Found`
-and the help icon color changes to red.
+If the File Name is not found paper toast will display `File not Found` message.
 
 
 ### Styling

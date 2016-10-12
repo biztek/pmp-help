@@ -28,13 +28,36 @@ pmp-help should show the contents of the file in a paper-dialog
     }
     
     #help {
-      color: var(--paper-indigo-700);
+      color: var(--paper-indigo-500);
+    }
+    
+    paper-dialog-scrollable {
+      position: relative;
+      max-width: 400px;
+      height: 300px;
+      overflow: auto;
+    }
+    
+    .close-button {
+      color: var(--paper-indigo-500);
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 14px;
+      position: absolute;
+      right: 7px;
+      top: -9px;
+      width: 14px;
+      z-index: 1;
     }
     </style>
     <div id="main">
       <section>
         <paper-icon-button icon="help" id="help" title="help" on-tap="_toggleDialog"></paper-icon-button>
         <paper-dialog id="dialog">
+          <h2>PDMP Help</h2>
+          <div class="close-button">
+            <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
+          </div>
           <paper-dialog-scrollable>
             <marked-element markdown="{{_fileContent}}">
             </marked-element>
@@ -45,7 +68,7 @@ pmp-help should show the contents of the file in a paper-dialog
         </paper-dialog>
       </section>
     </div>
-    <paper-toast id="toast" duration="[[_toastDuration]]" class="fit-bottom" text="Failed to load file."></paper-toast>
+    <paper-toast id="toast" duration="[[toastDuration]]" class="fit-bottom" text="Failed to load file."></paper-toast>
   </template>
   <script>
   Polymer({
@@ -61,7 +84,7 @@ pmp-help should show the contents of the file in a paper-dialog
         notify: true
       },
 
-      _toastDuration: {
+      toastDuration: {
         type: Number,
         value: 6000
       },
@@ -69,7 +92,6 @@ pmp-help should show the contents of the file in a paper-dialog
     },
 
     _getFileContent: function(fileName) {
-      console.log("filename:" + fileName);
       fetch(fileName).then(response => {
         if (response.headers.get("content-type") &&
           response.headers.get("content-type").toLowerCase().indexOf("text/x-markdown") >= 0) {
@@ -83,9 +105,8 @@ pmp-help should show the contents of the file in a paper-dialog
           this.$.dialog.open();
         }
       }).catch(error => {
-        console.log(error);
-        if (this.$.help && this.$.toast) {
-          this.$.help.style.color = 'red';
+        console.error(error);
+        if (this.$.toast) {
           this.$.toast.open();
         }
       });
