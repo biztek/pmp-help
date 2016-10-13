@@ -6,6 +6,7 @@
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-styles/color.html">
 <!--
 `pmp-help`
 pmp-help should show the contents of the file in a paper-dialog
@@ -17,57 +18,39 @@ pmp-help should show the contents of the file in a paper-dialog
     <style is="custom-style">
     : host {
       display: block;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
       width: 100%;
     }
     
-    #main {
-      max-width: 600px;
-      vertical-align: middle;
-    }
-    
     #help {
-      color: var(--paper-indigo-500);
+      color: var(--pmp-help-icon-color, --paper-indigo-500);
     }
     
-    paper-dialog-scrollable {
-      position: relative;
-      max-width: 400px;
-      height: 300px;
-      overflow: auto;
+    #button {
+      color: var(--pmp-paper-button-color);
     }
     
-    .close-button {
-      color: var(--paper-indigo-500);
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 14px;
-      position: absolute;
-      right: 7px;
-      top: -9px;
-      width: 14px;
-      z-index: 1;
+    #dialog {
+      --paper-dialog: {
+        @apply(--pmp-paper-dialog);
+      }
+    }
+    
+    #scrollable {
+      --paper-dialog-scrollable: {
+        @apply(--pmp-paper-dialog-scrollable);
+      }
     }
     </style>
-    <div id="main">
-      <section>
-        <paper-icon-button icon="help" id="help" title="help" on-tap="_toggleDialog"></paper-icon-button>
-        <paper-dialog id="dialog">
-          <h2>PDMP Help</h2>
-          <div class="close-button">
-            <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
-          </div>
-          <paper-dialog-scrollable>
-            <marked-element markdown="{{_fileContent}}">
-            </marked-element>
-          </paper-dialog-scrollable>
-          <div class="buttons">
-            <paper-button dialog-dismiss autofocus>Close</paper-button>
-          </div>
-        </paper-dialog>
-      </section>
-    </div>
+    <paper-icon-button icon="help" id="help" title="[[title]]" on-tap="_toggleDialog"></paper-icon-button>
+    <paper-dialog id="dialog">
+      <paper-dialog-scrollable id="scrollable">
+        <marked-element markdown="{{_fileContent}}">
+        </marked-element>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button id="button" dialog-dismiss autofocus>Close</paper-button>
+      </div>
+    </paper-dialog>
     <paper-toast id="toast" duration="[[toastDuration]]" class="fit-bottom" text="Failed to load file."></paper-toast>
   </template>
   <script>
@@ -87,6 +70,11 @@ pmp-help should show the contents of the file in a paper-dialog
       toastDuration: {
         type: Number,
         value: 6000
+      },
+
+      title: {
+        type: String,
+        value: 'help'
       },
 
     },
