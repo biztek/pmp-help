@@ -41,7 +41,7 @@ pmp-help should show the contents of the file in a paper-dialog
       }
     }
     </style>
-    <paper-icon-button icon="help" id="help" title="[[title]]" on-tap="_toggleDialog"></paper-icon-button>
+    <paper-icon-button icon="help" id="help" title$="[[title]]" on-tap="_toggleDialog"></paper-icon-button>
     <paper-dialog id="dialog">
       <paper-dialog-scrollable id="scrollable">
         <marked-element markdown="{{_fileContent}}">
