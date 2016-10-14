@@ -12,12 +12,12 @@ addons:
 before_script:
 - npm install -g bower web-component-tester
 - bower install
-script:
-- xvfb-run wct --skip-plugin sauce
-- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
-  local; fi
 env:
   global:
     secure: csX11At1VTVDxR95ycR4468QNbA/TqL7VsoOF3AIlSSFtTKAbYJYcCTRptTEBsYz3rOkZIMLxYUUDbz8M/Jh76Fz6MdNXhBgLOGgmS71ORnX2cy2Uk0QG7f68UEP57z6Njrw/nS0WA1oTushHIpjhEFHkhNrYDlzKpNTaAI61q+e5JpnMT++AZS0AF1XqBMQLSE/qkFu2d+TojfBap/6GLKdMBC6DgtNG4k+UeHQDKrsQe8ew5pAcQr8AfyZFzsac/hMBpAxH0fKOd0a7aU3M9fDmXbDbyC4mIwg9Rk2Qtm8E8PCYvG8jeK9IR0Tpa5H65ay4tg3cjXzMiiQTrKkMFINWFv1Bf94utEjpHTBRNioT/Rz6MLU6i4Xx/Ow6apirC1Zug6TffduYkFOSFN8EU+BN3J+nWEHj+JM4tn6K0G6fSxTAmmt+78X6joVTRjQ39DFR8dhXronCI4JVbzdl+BnIcrkscQg//mTdm9N/u34uL1RSOAZB4/WV3B/eUJpWujYtUTECPKDTEdATWVvAt4j4XkDNv5CFW2A5/yvch4t1SDTmP6jFJz4IAfANeK39DKarzky/iCeIyUuZM7wdY4r80ZjxktwiKK9MsTt6WRaUP1d0+zL9fg0677zFBTVYvQQIu/Fnyt+uprFdWjqsUUNwYkM8yB1lKEQ2SHn0k4=
 dd:
   secure: Rom20X+zB6JCoKoVROSXu15gamyFuETw+JqVJGlGV+q3fdAOc8SCw/YVm4ru9QumafVMiFC992DRTRsuersdVh+2dgrGHzlICo5EFQsuUdkBBZ9lXRF6wyZKDHnYY05TEsNYraNLsXdc4CpgiyImBaejWk3NQzX3Sxpp2jmBSIGjgHsGSukZGaSJsuACDwIP9s5wd1lCJMqgBJYAZzpnAB1Xn0YKsGIQC66M+oH6S5loETskZr5yU4SDxYojS6a4lJCbNjDLFfMGcLK+pzvMHWWnzokcWvmyili19s86G01POoiAuGKEOOC0EAE+RE49VEBxQFLFs41oYzGiitTSQ1ZxbUifHtOQwPlloTY2ihx97mKOpY36HJZfX6kDHg+T9zc8qwfDHulQJF9ZN/9+ZQtgoaY0TCTMJ6AOsyYtFSsnLtH2VcpLQjLgnaOQdNuOUiZo6zyYL0QJ2TPn3JYDusnr8A4ZJQaQwNvWLTazNxhmOUFJY3QWEFkhFRSk8SfQrR56Utmwr3REI+zai6y7TIUjSab4QBX1ooMH4Joz1qe613UvmkLKp88yLEcXK79e8mn+AcE5T9e69BCDo6cKl0N3Mae0vQomiezG/n02qO6RdEuupzVTQzbnlthypkL7b+5j2//3p1/OkDotUQA46JTKvsvotpTubefFrdVSr+I=
+script:
+- xvfb-run wct --skip-plugin sauce
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then wct --plugin sauce --skip-plugin
+  local; fi
