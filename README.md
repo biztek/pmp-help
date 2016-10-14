@@ -18,7 +18,7 @@ If the File Name is not found paper toast will display `File not Found` message.
 
 ### Styling
 
-The following custom properties and mixins are available for styling:
+The custom properties and mixins are available for styling:
 
 ## Contributing
 
